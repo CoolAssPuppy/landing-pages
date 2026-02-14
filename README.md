@@ -1,8 +1,8 @@
-Originally built by Strategic Nerds, Inc: www.strategicnerds.com
-
 # Landing Pages
 
 Open-source landing page templates built with Next.js 15, Tailwind CSS 4, and shadcn/ui. Define pages as TypeScript configuration objects and deploy production-ready campaigns in minutes.
+
+**Built by [Prashant Sridharan](https://www.strategicnerds.com) at [Strategic Nerds](https://www.strategicnerds.com).** These templates are a companion to [*Picks and Shovels: Marketing to Developers During the AI Gold Rush*](https://www.strategicnerds.com) -- the practical guide to building developer marketing programs that actually work. If you find these templates useful, the book goes deeper into strategy, positioning, and campaign design.
 
 ## Setup in 30 seconds
 
