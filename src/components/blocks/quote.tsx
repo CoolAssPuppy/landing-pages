@@ -20,6 +20,23 @@ export type QuoteProps = QuoteConfig & {
   className?: string;
 };
 
+function MaybeLink({
+  children,
+  href,
+}: {
+  children: React.ReactNode;
+  href?: string;
+}) {
+  if (href) {
+    return (
+      <Link className="hover:opacity-90 transition-opacity" href={href}>
+        {children}
+      </Link>
+    );
+  }
+  return <>{children}</>;
+}
+
 export function Quote({
   quote,
   author,
@@ -32,23 +49,6 @@ export function Quote({
   size = "default",
   className,
 }: QuoteProps) {
-  const MaybeLink = ({
-    children,
-    href,
-  }: {
-    children: React.ReactNode;
-    href?: string;
-  }) => {
-    if (href) {
-      return (
-        <Link className="hover:opacity-90 transition-opacity" href={href}>
-          {children}
-        </Link>
-      );
-    }
-    return <>{children}</>;
-  };
-
   const resolvedAvatar = avatar ? resolveAvatarUrl(avatar) : undefined;
 
   if (size === "large") {

@@ -58,6 +58,36 @@ const templateExamples: TemplateExample[] = [
     description: "Event registration pages with speaker bios, agenda timeline, and signup forms.",
     slug: "example-webinar",
   },
+  {
+    title: "Case Study",
+    description: "Customer stories with problem/solution/results narrative, metrics, and quotes.",
+    slug: "example-case-study",
+  },
+  {
+    title: "Product Launch",
+    description: "Announcement pages with feature highlights, video, code snippets, and FAQs.",
+    slug: "example-product-launch",
+  },
+  {
+    title: "Demo Request",
+    description: "Book a demo pages with prominent form, value props, and social proof.",
+    slug: "example-demo-request",
+  },
+  {
+    title: "Job Listing",
+    description: "Job postings with role details, requirements, benefits, and application form.",
+    slug: "example-job-listing",
+  },
+  {
+    title: "Event Recap",
+    description: "Post-event pages with recording, speakers, slides, and related resources.",
+    slug: "example-event-recap",
+  },
+  {
+    title: "Integration",
+    description: "Integration pages with logo lockup, setup steps, code examples, and features.",
+    slug: "example-integration",
+  },
 ];
 
 /**

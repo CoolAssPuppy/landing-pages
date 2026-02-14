@@ -1,9 +1,7 @@
-import Image from "next/image";
-
 import { PageHeader, FooterMinimal, ContentWrapper, Section } from "@/components/layout";
-import { ContentBlock, SocialProof, FormSection } from "@/components/blocks";
+import { ContentBlock, SocialProof, FormSection, SpeakersGrid } from "@/components/blocks";
 import { WebinarPlatformBadge } from "@/components/blocks/webinar-platform-badge";
-import type { WebinarPageConfig, SpeakerConfig, AgendaItem } from "@/types/page-config";
+import type { WebinarPageConfig, AgendaItem } from "@/types/page-config";
 
 interface WebinarTemplateProps {
   config: WebinarPageConfig;
@@ -128,50 +126,6 @@ function WebinarDetails({ date, startTime, duration }: WebinarDetailsProps) {
       <span className="flex items-center gap-1.5">
         <span className="font-medium text-foreground">Duration:</span> {duration}
       </span>
-    </div>
-  );
-}
-
-interface SpeakersGridProps {
-  speakers: SpeakerConfig[];
-}
-
-function SpeakersGrid({ speakers }: SpeakersGridProps) {
-  const gridCols =
-    speakers.length === 1
-      ? "max-w-sm mx-auto"
-      : speakers.length === 2
-        ? "grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto"
-        : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
-
-  return (
-    <div className={`grid gap-8 ${gridCols}`}>
-      {speakers.map((speaker) => (
-        <div
-          key={speaker.name}
-          className="flex flex-col items-center text-center p-6 rounded-md border border-border bg-background"
-        >
-          {speaker.avatar && (
-            <div className="relative w-20 h-20 rounded-full overflow-hidden mb-4">
-              <Image
-                src={speaker.avatar.src}
-                alt={speaker.avatar.alt}
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
-            </div>
-          )}
-          <h3 className="text-lg font-medium text-foreground">{speaker.name}</h3>
-          <p className="text-sm text-muted-foreground">
-            {speaker.role}
-            {speaker.company && `, ${speaker.company}`}
-          </p>
-          {speaker.bio && (
-            <p className="mt-3 text-sm text-muted-foreground">{speaker.bio}</p>
-          )}
-        </div>
-      ))}
     </div>
   );
 }

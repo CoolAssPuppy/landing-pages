@@ -27,8 +27,8 @@ interface FormSubmissionBody {
  *
  * Security measures:
  * - CSRF token validation
- * - Origin validation (via middleware)
- * - Rate limiting (via middleware)
+ * - Origin validation (via proxy)
+ * - Rate limiting (via proxy)
  * - Bot detection
  * - Input sanitization and XSS prevention
  */

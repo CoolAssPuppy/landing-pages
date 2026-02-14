@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   extractUTMParams,
@@ -9,44 +9,32 @@ import {
   type UTMParams,
 } from "@/lib/analytics";
 
-interface UseUTMParamsReturn {
-  utmParams: UTMParams;
-  isLoaded: boolean;
-}
-
-export function useUTMParams(): UseUTMParamsReturn {
+export function useUTMParams(): UTMParams {
   const searchParams = useSearchParams();
-  const [utmParams, setUtmParams] = useState<UTMParams>({});
-  const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
+  const utmParams = useMemo(() => {
     const storedParams = getStoredUTMParams();
     const urlParams = extractUTMParams(searchParams);
-    const mergedParams = { ...storedParams, ...urlParams };
-
-    storeUTMParams(mergedParams);
-    setUtmParams(mergedParams);
-    setIsLoaded(true);
+    return { ...storedParams, ...urlParams };
   }, [searchParams]);
 
-  return { utmParams, isLoaded };
+  useEffect(() => {
+    storeUTMParams(utmParams);
+  }, [utmParams]);
+
+  return utmParams;
 }
 
 export function useUTMFormFields(): Record<string, string> {
-  const { utmParams, isLoaded } = useUTMParams();
-  const [fields, setFields] = useState<Record<string, string>>({});
+  const utmParams = useUTMParams();
 
-  useEffect(() => {
-    if (!isLoaded) return;
-
+  return useMemo(() => {
     const formFields: Record<string, string> = {};
     for (const [key, value] of Object.entries(utmParams)) {
       if (value) {
         formFields[key] = value;
       }
     }
-    setFields(formFields);
-  }, [utmParams, isLoaded]);
-
-  return fields;
+    return formFields;
+  }, [utmParams]);
 }

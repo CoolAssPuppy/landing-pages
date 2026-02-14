@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [1.0.0] - 2025-02-14
+## [1.0.0] - 2026-02-14
 
 ### Added
 
-- Nine landing page templates: lead generation, thank you, legal/rules, waitlist, resource hub, partner co-marketing, comparison, pricing, and webinar
+- Fifteen landing page templates: lead generation, thank you, legal/rules, waitlist, resource hub, partner co-marketing, comparison, pricing, webinar, case study, product launch, demo request, job listing, event recap, and integration
 - Data-driven page configuration system using TypeScript objects
 - Standard shadcn/ui theming with CSS variables and dark/light mode
 - HubSpot Forms/Contacts API integration

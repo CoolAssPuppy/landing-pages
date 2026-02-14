@@ -5,7 +5,7 @@ import { generateCSRFToken } from "@/lib/csrf";
  * GET /api/csrf - Generate a new CSRF token
  *
  * Security measures:
- * - Rate limited via middleware
+ * - Rate limited via proxy
  * - Returns token in response body (not cookie) for SPA usage
  * - Token includes HMAC signature and expiry
  */
@@ -26,8 +26,7 @@ export async function GET(): Promise<NextResponse> {
         },
       }
     );
-  } catch (error) {
-    console.error("CSRF token generation error:", error);
+  } catch {
     return NextResponse.json(
       { error: "Failed to generate token" },
       { status: 500 }

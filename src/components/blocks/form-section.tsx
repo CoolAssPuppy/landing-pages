@@ -48,7 +48,11 @@ export function FormSection({
   const { token: csrfToken, isLoading: csrfLoading, error: csrfError } = useCSRFToken();
   const utmFields = useUTMFormFields();
   const formRef = useRef<HTMLFormElement>(null);
-  const startTimeRef = useRef<number>(Date.now());
+  const startTimeRef = useRef<number>(0);
+
+  useEffect(() => {
+    startTimeRef.current = Date.now();
+  }, []);
 
   const [state, setState] = useState<FormState>({
     isSubmitting: false,

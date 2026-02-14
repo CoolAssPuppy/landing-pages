@@ -82,7 +82,7 @@ if (typeof setInterval !== "undefined") {
   setInterval(cleanupRateLimitStore, 5 * 60 * 1000);
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Only apply to API routes
