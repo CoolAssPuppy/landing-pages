@@ -4,6 +4,38 @@ Originally built by Strategic Nerds, Inc: www.strategicnerds.com
 
 Open-source landing page templates built with Next.js 15, Tailwind CSS 4, and shadcn/ui. Define pages as TypeScript configuration objects and deploy production-ready campaigns in minutes.
 
+## Setup in 30 seconds
+
+```bash
+git clone <repository-url>
+cd landing-pages
+npm install
+```
+
+1. **Open `src/config/site.ts`** -- set your company name, logo paths, nav links, and footer.
+2. **Drop your logo files in `public/images/`** -- set both `logo.light` and `logo.dark` paths in the config. If you only have one logo, set both to the same path.
+3. **Replace `public/favicon.svg`** with your own favicon.
+4. **Pick a color theme (optional)** -- open `src/app/globals.css`, comment out the Neutral theme, and uncomment one of the four presets (Blue, Green, Violet, Orange).
+5. **Deploy** -- push to Vercel, point your subdomain, done.
+
+```bash
+npm run dev        # preview locally at http://localhost:3000
+npm run build      # verify production build
+```
+
+### Custom domain setup
+
+After deploying to Vercel:
+
+1. Go to your Vercel project **Settings > Domains**
+2. Add your custom domain (e.g., `go.your-domain.com`)
+3. At your domain registrar, add a CNAME record:
+   - **Name**: `go` (or whatever subdomain you chose)
+   - **Value**: `cname.vercel-dns.com`
+4. Wait for DNS propagation (usually under 5 minutes)
+
+Vercel handles SSL certificates automatically.
+
 ## Features
 
 - **Data-driven pages**: Define pages as TypeScript configuration objects -- no custom React needed
@@ -71,7 +103,8 @@ landing-pages/
 │   │   ├── templates/          # Page templates
 │   │   └── theme/              # Theme provider and toggle
 │   ├── config/                 # Site configuration
-│   ├── lib/                    # Utilities and integrations
+│   ├── lib/                    # Utilities
+│   │   └── integrations/       # Marketing platform libraries (HubSpot, Customer.io, etc.)
 │   ├── hooks/                  # React hooks
 │   └── types/                  # TypeScript definitions
 ├── data/
@@ -98,6 +131,12 @@ landing-pages/
 | `comparison` | Product comparisons, vs. pages | Comparison table, split sections, timeline, FAQ |
 | `pricing` | Sale pricing, promotions | Pricing tier cards, feature comparison, countdown, FAQ |
 | `webinar` | Event registrations | Date/time info, speakers, agenda, registration form |
+| `case-study` | Customer stories, success stories | Problem/solution/results narrative, metrics, quote |
+| `product-launch` | Feature announcements, releases | Badge, video, feature highlights, code snippet, FAQ |
+| `demo-request` | Book a demo, request a meeting | Split hero with form, calendar embed, value props |
+| `job-listing` | Job postings, career pages | Role details, responsibilities, requirements, apply form |
+| `event-recap` | Post-event pages, on-demand content | Recording, speakers, slides, related resources |
+| `integration` | Integration pages, marketplace listings | Logo lockup, setup steps, code snippet, features |
 
 ## Creating a new landing page
 
@@ -171,58 +210,59 @@ Edit the CSS variables in `src/app/globals.css`. The key variables are:
 
 Both `:root` (light) and `.dark` (dark) themes need updating.
 
-#### Using pre-built themes
+#### Built-in color presets
 
-The easiest approach is to grab a theme from [ui.shadcn.com/themes](https://ui.shadcn.com/themes):
+The file `src/app/globals.css` ships with five complete themes: Neutral (active by default), Blue, Green, Violet, and Orange. To switch:
+
+1. Open `src/app/globals.css`
+2. Comment out the active `:root` and `.dark` blocks (labeled `NEUTRAL THEME`)
+3. Uncomment the preset you want (e.g., `BLUE THEME`)
+4. Rebuild
+
+Each preset is a complete pair of light and dark mode variables. No need to understand OKLCH -- just uncomment and go.
+
+#### Using shadcn themes
+
+You can also grab a theme from [ui.shadcn.com/themes](https://ui.shadcn.com/themes):
 
 1. Pick a theme and copy the CSS variables
-2. Replace the `:root` and `.dark` blocks in `src/app/globals.css`
+2. Replace the active `:root` and `.dark` blocks in `src/app/globals.css`
 3. Keep the `@theme inline` block, prose styles, and code block colors as they are
-
-#### Example: switching to a blue primary
-
-Replace the `--primary` lines in both `:root` and `.dark`:
-
-```css
-:root {
-  --primary: oklch(0.55 0.2 250);
-  --primary-foreground: oklch(0.985 0 0);
-}
-
-.dark {
-  --primary: oklch(0.65 0.2 250);
-  --primary-foreground: oklch(0.145 0 0);
-}
-```
 
 ### Branding
 
 #### Logo
 
-Replace the logo component in `src/components/ui/site-logo.tsx`. The default uses a Lucide icon and text:
+Set your logo paths in `src/config/site.ts`. The component reads from the config automatically:
 
 ```typescript
-export function SiteLogo({ className }: SiteLogoProps) {
-  return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <Layers className="h-6 w-6 text-primary" />
-      <span className="text-lg font-medium text-foreground">Landing Pages</span>
-    </div>
-  );
-}
+logo: {
+  light: "/images/your-logo.png",       // shown in light mode
+  dark: "/images/your-logo-white.png",  // shown in dark mode
+  height: 32,                            // rendered height in pixels
+},
 ```
 
-Replace with your own SVG, image import, or custom component.
+Drop your logo files in `public/images/`. If you only have one logo, set both `light` and `dark` to the same path.
 
 #### Site configuration
 
-Edit `src/config/site.ts` to set your company name, description, URL, and footer links:
+Edit `src/config/site.ts` to set your company name, description, URL, logo, nav links, and footer:
 
 ```typescript
 export const siteConfig = {
   name: "Your Product",
   description: "Your product description",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  logo: {
+    light: "/images/your-logo.png",
+    dark: "/images/your-logo-white.png",
+    height: 32,
+  },
+  nav: [
+    { label: "Product", href: "https://your-domain.com" },
+    { label: "Docs", href: "https://docs.your-domain.com" },
+  ],
   footer: {
     company: "Your Company, Inc.",
     links: [
@@ -301,12 +341,35 @@ Edit `src/config/site.ts` to customize the site name, description, URL, and foot
 
 ## Marketing integrations
 
-### HubSpot
+All integration libraries live in `src/lib/integrations/`. The front end is completely decoupled from the integrations layer -- forms submit to `/api/form`, and the route handler calls whichever integrations are configured. No front-end changes are needed to add or swap integrations.
 
-1. Create a HubSpot account and a private app with Forms and Contacts scopes
-2. Create a form in HubSpot with fields matching your page config field `name` values
-3. Set `HUBSPOT_ACCESS_TOKEN` in `.env.local`
-4. Add `hubspotPortalId` and `hubspotFormId` to your form config
+### How it works
+
+```
+Browser form  -->  /api/form (route.ts)  -->  src/lib/integrations/hubspot.ts
+                                          -->  src/lib/integrations/customerio.ts
+                                          -->  (your integration here)
+```
+
+Each integration library:
+- Lives in `src/lib/integrations/` as a standalone file
+- Exports async functions that accept sanitized form data
+- Reads its own credentials from environment variables
+- Returns a result type (`{ success: true }` or `{ success: false; error: string }`)
+- Fails gracefully when not configured (no env vars = no-op, no crash)
+
+The route handler in `src/app/api/form/route.ts` calls each integration conditionally based on what is configured in the form config and what environment variables are set.
+
+### Built-in integrations
+
+#### HubSpot (CRM + forms)
+
+**What it does:** Submits form data to HubSpot via the Forms API, or creates/updates contacts via the Contacts API as a fallback.
+
+**Setup:**
+1. Create a HubSpot private app with Forms and Contacts scopes
+2. Set `HUBSPOT_ACCESS_TOKEN` in `.env.local`
+3. Add `hubspotPortalId` and `hubspotFormId` to your form config
 
 ```typescript
 form: {
@@ -321,11 +384,13 @@ form: {
 
 Field `name` values must match HubSpot internal field names exactly.
 
-### Customer.io
+#### Customer.io (event tracking)
 
-1. Create a Customer.io account
-2. Set `CUSTOMERIO_SITE_ID` and `CUSTOMERIO_API_KEY` in `.env.local`
-3. Add `customerio` config to your form
+**What it does:** Creates/updates customer profiles and tracks custom events with metadata.
+
+**Setup:**
+1. Set `CUSTOMERIO_SITE_ID` and `CUSTOMERIO_API_KEY` in `.env.local`
+2. Add `customerio` config to your form
 
 ```typescript
 form: {
@@ -343,12 +408,21 @@ The email field is used as the customer identifier. Events and metadata appear i
 
 ### Adding a new integration
 
-To add a new form submission integration (e.g., Mailchimp, Salesforce):
+We welcome contributions of additional integration libraries. Salesforce, Marketo, Mailchimp, Brevo, ActiveCampaign, Intercom -- if your marketing stack uses it, it belongs here.
 
-1. Create a new file in `src/lib/` (e.g., `src/lib/mailchimp.ts`)
-2. Export an async function that accepts form data and sends it to the API
-3. Call your function from `src/app/api/form/route.ts` alongside the existing HubSpot and Customer.io calls
-4. Add any required environment variables to `.env.example`
+To add a new integration:
+
+1. Create a new file in `src/lib/integrations/` (e.g., `salesforce.ts`)
+2. Export async functions that accept form data and send it to the API
+3. Read credentials from environment variables (e.g., `SALESFORCE_CLIENT_ID`)
+4. Return `{ success: true }` or `{ success: false; error: string }`
+5. Handle the "not configured" case gracefully (return early if env vars are missing)
+6. Add the call to `src/app/api/form/route.ts` alongside the existing HubSpot and Customer.io calls
+7. Add any new `FormConfig` fields to `src/types/page-config.ts` if needed
+8. Add the new environment variables to `.env.example`
+9. Export from `src/lib/integrations/index.ts`
+
+The front end stays untouched. Forms already send all config and field data to the API route -- your integration just needs to pick up the data it cares about on the server side.
 
 ## Security
 
@@ -424,9 +498,8 @@ This walkthrough shows what it would take to rebrand all the example pages to ma
 
 | File | What to change |
 |------|---------------|
-| `src/config/site.ts` | Product name, company, footer links |
-| `src/components/ui/site-logo.tsx` | Logo |
-| `src/app/globals.css` | Theme colors |
+| `src/config/site.ts` | Product name, logo paths, nav links, company, footer links |
+| `src/app/globals.css` | Theme colors (uncomment a preset or paste custom values) |
 | `src/app/layout.tsx` | Font (optional) |
 | `data/pages/examples/example-ebook.tsx` | All content |
 | `data/pages/examples/example-waitlist.ts` | All content |

@@ -15,6 +15,12 @@ import {
   ComparisonTemplate,
   PricingTemplate,
   WebinarTemplate,
+  CaseStudyTemplate,
+  ProductLaunchTemplate,
+  DemoRequestTemplate,
+  JobListingTemplate,
+  EventRecapTemplate,
+  IntegrationTemplate,
 } from "@/components/templates";
 import {
   isLeadGenPage,
@@ -26,6 +32,12 @@ import {
   isComparisonPage,
   isPricingPage,
   isWebinarPage,
+  isCaseStudyPage,
+  isProductLaunchPage,
+  isDemoRequestPage,
+  isJobListingPage,
+  isEventRecapPage,
+  isIntegrationPage,
 } from "@/types/page-config";
 
 interface PageProps {
@@ -147,6 +159,30 @@ function PageRenderer({
 
   if (isWebinarPage(config)) {
     return <WebinarTemplate config={config} />;
+  }
+
+  if (isCaseStudyPage(config)) {
+    return <CaseStudyTemplate config={config} />;
+  }
+
+  if (isProductLaunchPage(config)) {
+    return <ProductLaunchTemplate config={config} />;
+  }
+
+  if (isDemoRequestPage(config)) {
+    return <DemoRequestTemplate config={config} />;
+  }
+
+  if (isJobListingPage(config)) {
+    return <JobListingTemplate config={config} />;
+  }
+
+  if (isEventRecapPage(config)) {
+    return <EventRecapTemplate config={config} />;
+  }
+
+  if (isIntegrationPage(config)) {
+    return <IntegrationTemplate config={config} />;
   }
 
   // This should never happen with proper type guards

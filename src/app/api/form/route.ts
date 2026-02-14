@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateCSRFToken, extractCSRFTokenFromHeader } from "@/lib/csrf";
 import { validateFormData, detectBot } from "@/lib/security";
-import { submitToHubSpotForm, upsertHubSpotContact } from "@/lib/hubspot";
-import { trackFormSubmission } from "@/lib/customerio";
+import { submitToHubSpotForm, upsertHubSpotContact } from "@/lib/integrations/hubspot";
+import { trackFormSubmission } from "@/lib/integrations/customerio";
 
 interface FormSubmissionBody {
   fields: Record<string, string>;

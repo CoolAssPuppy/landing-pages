@@ -443,6 +443,216 @@ export interface AgendaItem {
   speaker?: string;
 }
 
+// Case study page configuration
+export interface CaseStudyPageConfig {
+  type: "case-study";
+  slug: string;
+  metadata: PageMetadata;
+  hero: {
+    title: string;
+    subtitle?: string;
+    description?: string | ReactNode;
+    badge?: string;
+    customerLogo?: { src: string; srcDark?: string; alt: string };
+  };
+  customer: {
+    name: string;
+    industry?: string;
+    size?: string;
+    location?: string;
+  };
+  challenge: {
+    title?: string;
+    description: string | ReactNode;
+  };
+  solution: {
+    title?: string;
+    description: string | ReactNode;
+    features?: ContentBlockItem[];
+  };
+  results: {
+    title?: string;
+    description?: string | ReactNode;
+    metrics: StatConfig[];
+  };
+  customerQuote?: QuoteConfig;
+  splitSections?: SplitSectionConfig[];
+  ctaBanner: {
+    title: string;
+    description?: string;
+    cta: CTAConfig;
+    secondaryCta?: CTAConfig;
+  };
+}
+
+// Product launch / announcement page configuration
+export interface ProductLaunchPageConfig {
+  type: "product-launch";
+  slug: string;
+  metadata: PageMetadata;
+  hero: HeroConfig;
+  badge?: string;
+  video?: VideoConfig;
+  features?: ContentBlockConfig[];
+  splitSections?: SplitSectionConfig[];
+  codeSnippet?: CodeSnippetConfig;
+  socialProof?: SocialProofConfig;
+  faq?: {
+    title?: string;
+    subtitle?: string;
+    items: FAQItemConfig[];
+  };
+  ctaBanner: {
+    title: string;
+    description?: string;
+    cta: CTAConfig;
+    secondaryCta?: CTAConfig;
+  };
+  form?: FormConfig;
+}
+
+// Demo request / book a meeting page configuration
+export interface DemoRequestPageConfig {
+  type: "demo-request";
+  slug: string;
+  metadata: PageMetadata;
+  hero: {
+    title: string;
+    subtitle?: string;
+    description?: string | ReactNode;
+    badge?: string;
+  };
+  form: FormConfig;
+  calendarEmbed?: {
+    url: string;
+    title?: string;
+  };
+  valueProps?: ContentBlockItem[];
+  socialProof?: SocialProofConfig;
+  customerQuote?: QuoteConfig;
+  faq?: {
+    title?: string;
+    subtitle?: string;
+    items: FAQItemConfig[];
+  };
+  ctaBanner?: {
+    title: string;
+    description?: string;
+    cta: CTAConfig;
+    secondaryCta?: CTAConfig;
+  };
+}
+
+// Job listing page configuration
+export interface JobListingPageConfig {
+  type: "job-listing";
+  slug: string;
+  metadata: PageMetadata;
+  role: {
+    title: string;
+    department?: string;
+    location: string;
+    type?: string;
+    salary?: string;
+  };
+  description: string | ReactNode;
+  responsibilities?: {
+    title?: string;
+    items: string[];
+  };
+  requirements?: {
+    title?: string;
+    items: string[];
+  };
+  niceToHave?: {
+    title?: string;
+    items: string[];
+  };
+  benefits?: ContentBlockItem[];
+  aboutSection?: {
+    title?: string;
+    description: string | ReactNode;
+    image?: { src: string; alt: string };
+  };
+  form: FormConfig;
+}
+
+// Event recap page configuration
+export interface EventRecapPageConfig {
+  type: "event-recap";
+  slug: string;
+  metadata: PageMetadata;
+  hero: {
+    title: string;
+    subtitle?: string;
+    description?: string | ReactNode;
+    badge?: string;
+  };
+  event: {
+    date: string;
+    location?: string;
+    attendees?: string;
+  };
+  recording?: VideoConfig;
+  speakers?: SpeakerConfig[];
+  keyTakeaways?: ContentBlockItem[];
+  slides?: {
+    title?: string;
+    description?: string;
+    downloadUrl: string;
+    previewImage?: { src: string; alt: string };
+  };
+  socialProof?: SocialProofConfig;
+  relatedResources?: Array<{
+    title: string;
+    description: string;
+    href: string;
+    type?: string;
+  }>;
+  ctaBanner?: {
+    title: string;
+    description?: string;
+    cta: CTAConfig;
+    secondaryCta?: CTAConfig;
+  };
+  form?: FormConfig;
+}
+
+// Integration page configuration
+export interface IntegrationPageConfig {
+  type: "integration";
+  slug: string;
+  metadata: PageMetadata;
+  hero: HeroConfig;
+  integration: {
+    name: string;
+    logo: string;
+    logoDark?: string;
+    description?: string;
+    category?: string;
+  };
+  setupSteps?: {
+    title?: string;
+    subtitle?: string;
+    steps: TimelineStepConfig[];
+  };
+  features?: ContentBlockConfig[];
+  codeSnippet?: CodeSnippetConfig;
+  splitSections?: SplitSectionConfig[];
+  socialProof?: SocialProofConfig;
+  faq?: {
+    title?: string;
+    subtitle?: string;
+    items: FAQItemConfig[];
+  };
+  ctaBanner: {
+    title: string;
+    description?: string;
+    cta: CTAConfig;
+    secondaryCta?: CTAConfig;
+  };
+}
+
 // Webinar page configuration
 export interface WebinarPageConfig {
   type: "webinar";
@@ -476,7 +686,13 @@ export type PageConfig =
   | PartnerPageConfig
   | ComparisonPageConfig
   | PricingPageConfig
-  | WebinarPageConfig;
+  | WebinarPageConfig
+  | CaseStudyPageConfig
+  | ProductLaunchPageConfig
+  | DemoRequestPageConfig
+  | JobListingPageConfig
+  | EventRecapPageConfig
+  | IntegrationPageConfig;
 
 export function isLeadGenPage(config: PageConfig): config is LeadGenPageConfig {
   return config.type === "lead-gen";
@@ -514,4 +730,28 @@ export function isPricingPage(config: PageConfig): config is PricingPageConfig {
 
 export function isWebinarPage(config: PageConfig): config is WebinarPageConfig {
   return config.type === "webinar";
+}
+
+export function isCaseStudyPage(config: PageConfig): config is CaseStudyPageConfig {
+  return config.type === "case-study";
+}
+
+export function isProductLaunchPage(config: PageConfig): config is ProductLaunchPageConfig {
+  return config.type === "product-launch";
+}
+
+export function isDemoRequestPage(config: PageConfig): config is DemoRequestPageConfig {
+  return config.type === "demo-request";
+}
+
+export function isJobListingPage(config: PageConfig): config is JobListingPageConfig {
+  return config.type === "job-listing";
+}
+
+export function isEventRecapPage(config: PageConfig): config is EventRecapPageConfig {
+  return config.type === "event-recap";
+}
+
+export function isIntegrationPage(config: PageConfig): config is IntegrationPageConfig {
+  return config.type === "integration";
 }

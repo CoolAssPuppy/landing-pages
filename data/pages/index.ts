@@ -19,6 +19,12 @@ import {
   exampleWebinarPage,
   exampleWebinarThankYouPage,
 } from "./examples/example-webinar";
+import { exampleCaseStudyPage } from "./examples/example-case-study";
+import { exampleProductLaunchPage } from "./examples/example-product-launch";
+import { exampleDemoRequestPage } from "./examples/example-demo-request";
+import { exampleJobListingPage } from "./examples/example-job-listing";
+import { exampleEventRecapPage } from "./examples/example-event-recap";
+import { exampleIntegrationPage } from "./examples/example-integration";
 
 // Page registry -- import configs and add them to the array below.
 // Pages are available at /{slug}. Slugs come from each config, not directory structure.
@@ -50,6 +56,24 @@ export const pages: PageConfig[] = [
   // Webinar examples
   exampleWebinarPage,
   exampleWebinarThankYouPage,
+
+  // Case study example
+  exampleCaseStudyPage,
+
+  // Product launch example
+  exampleProductLaunchPage,
+
+  // Demo request example
+  exampleDemoRequestPage,
+
+  // Job listing example
+  exampleJobListingPage,
+
+  // Event recap example
+  exampleEventRecapPage,
+
+  // Integration example
+  exampleIntegrationPage,
 ];
 
 export function getPageBySlug(slug: string): PageConfig | undefined {

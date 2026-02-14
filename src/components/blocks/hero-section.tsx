@@ -38,7 +38,7 @@ export function HeroSection({ config, className }: HeroSectionProps) {
               <div className="flex flex-wrap gap-4 pt-2">
                 {ctas.map((cta, index) => (
                   <CTAButton
-                    key={cta.href}
+                    key={index}
                     cta={cta}
                     size="large"
                     defaultVariant={index === 0 ? "default" : "secondary"}

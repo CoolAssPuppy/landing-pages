@@ -68,7 +68,7 @@ export function ThankYouTemplate({ config }: ThankYouTemplateProps) {
                   <div className="flex flex-wrap justify-center gap-4">
                     {secondaryContent.ctas.map((cta, index) => (
                       <CTAButton
-                        key={cta.href}
+                        key={index}
                         cta={cta}
                         size="large"
                         defaultVariant={index === 0 ? "default" : "outline"}
