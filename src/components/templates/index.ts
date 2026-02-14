@@ -1,0 +1,9 @@
+export { LeadGenTemplate } from "./lead-gen-template";
+export { ThankYouTemplate } from "./thank-you-template";
+export { LegalTemplate } from "./legal-template";
+export { WaitlistTemplate } from "./waitlist-template";
+export { ResourceHubTemplate } from "./resource-hub-template";
+export { PartnerTemplate } from "./partner-template";
+export { ComparisonTemplate } from "./comparison-template";
+export { PricingTemplate } from "./pricing-template";
+export { WebinarTemplate } from "./webinar-template";
